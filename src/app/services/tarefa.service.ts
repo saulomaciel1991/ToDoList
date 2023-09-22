@@ -37,4 +37,23 @@ export class TarefaService {
       return collection;
     }
   }
+
+  excluir(item: any, callback: any) {
+    let value = localStorage.getItem(this.key);
+
+    if (value == null || value == undefined) {
+      return;
+    } else {
+      let collection: any[] = JSON.parse(value);
+
+      collection = collection.filter( tarefa =>{return tarefa.tarefa != item.tarefa})
+
+      localStorage.setItem(this.key, JSON.stringify(collection));
+
+      if (callback != undefined) {
+        callback();
+      }
+      return;
+    }
+  }
 }

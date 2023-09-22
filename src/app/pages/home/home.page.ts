@@ -22,6 +22,12 @@ export class HomePage {
     this.tarefaCollection = this.tarefaService.listar();
   }
 
+  excluir(item: any) {
+    this.tarefaService.excluir(item, () =>{
+      this.listarTarefas()
+    })
+  }
+
   async showAdd() {
     const alert = await this.alertCtrl.create({
       header: 'Informe a Tarefa',
