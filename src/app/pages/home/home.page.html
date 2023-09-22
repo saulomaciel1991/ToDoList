@@ -7,6 +7,16 @@
 </ion-header>
 
 <ion-content [fullscreen]="true" mode="ios">
+  <ion-list>
+    <ion-item *ngFor="let item of tarefaCollection; let i = index">
+      <ion-label>
+        <h3>{{item.tarefa}}</h3>
+        <p>{{item.status}}</p>
+      </ion-label>
+    </ion-item>
+  </ion-list>
+
+  
   <ion-fab vertical="bottom" horizontal="end" slot="fixed">
     <ion-fab-button color="primary" (click)="showAdd()">
       <ion-icon name="add"></ion-icon>

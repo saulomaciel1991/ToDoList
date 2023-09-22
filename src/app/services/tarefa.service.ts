@@ -8,7 +8,7 @@ export class TarefaService {
   key: string = 'tarefaCollection';
   constructor() {}
 
-  salvar(tarefa: any) {
+  salvar(tarefa: any, callback: any) {
     tarefa.status = 'Pendente';
 
     let value = localStorage.getItem(this.key);
@@ -20,6 +20,21 @@ export class TarefaService {
       let collection: any[] = JSON.parse(value);
       collection.push(tarefa);
       localStorage.setItem(this.key, JSON.stringify(collection));
+    }
+
+    if (callback != undefined) {
+      callback();
+    }
+  }
+
+  listar() {
+    let value = localStorage.getItem(this.key);
+
+    if (value == null || value == undefined) {
+      return [];
+    } else {
+      let collection: any[] = JSON.parse(value);
+      return collection;
     }
   }
 }
