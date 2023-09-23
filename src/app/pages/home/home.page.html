@@ -12,14 +12,15 @@
     <ion-item-sliding *ngFor="let item of tarefaCollection; let i = index">
       <ion-item (click)="openActions(item)">
         <ion-label>
-          <h3 *ngIf="item.feito == false">{{item.tarefa}}</h3>
-          <p *ngIf="item.feito == false">
-            <ion-icon name="square-outline"></ion-icon>
-          </p>
-          <h3 *ngIf="item.feito == true"><del>{{item.tarefa}}</del></h3>
-          <p *ngIf="item.feito == true">
-            <ion-icon name="checkbox"></ion-icon>
-          </p>
+          <ion-item *ngIf="item.feito == false">
+            <ion-icon slot="start" name="information-circle" color="danger"></ion-icon>
+            <h3>{{item.tarefa}}</h3>
+          </ion-item>
+
+          <ion-item *ngIf="item.feito == true">
+            <ion-icon slot="start" name="checkmark-circle" color="success"></ion-icon>
+            <h3><del>{{item.tarefa}}</del></h3>
+          </ion-item>
         </ion-label>
       </ion-item>
 
