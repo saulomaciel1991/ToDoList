@@ -1,5 +1,9 @@
 import { Component } from '@angular/core';
-import { AlertController } from '@ionic/angular';
+import {
+  ActionSheetController,
+  ActionSheetOptions,
+  AlertController,
+} from '@ionic/angular';
 import { TarefaService } from 'src/app/services/tarefa.service';
 
 @Component({
@@ -11,7 +15,8 @@ export class HomePage {
   tarefaCollection: any[] = [];
   constructor(
     private alertCtrl: AlertController,
-    private tarefaService: TarefaService
+    private tarefaService: TarefaService,
+    private actionSheetCtrl: ActionSheetController
   ) {}
 
   ionViewDidEnter() {
@@ -23,9 +28,9 @@ export class HomePage {
   }
 
   excluir(item: any) {
-    this.tarefaService.excluir(item, () =>{
-      this.listarTarefas()
-    })
+    this.tarefaService.excluir(item, () => {
+      this.listarTarefas();
+    });
   }
 
   async showAdd() {
@@ -58,5 +63,32 @@ export class HomePage {
     });
 
     alert.present();
+  }
+
+  async openActions(tarefa: any) {
+    // let ac: ActionSheetOptions = {
+    //   header: 'O que deseja Fazer?',
+    //   buttons: [
+    //     {
+    //       text: tarefa.feito ? 'Pendente' : 'Feito',
+    //       icon: tarefa.feito ? 'square-outline' : 'checkbox',
+    //       handler: () => {
+    //         tarefa.feito = !tarefa.feito;
+
+    //         this.tarefaService.atualizar(tarefa, () => {
+    //           this.listarTarefas()
+    //         })
+    //       },
+    //     },
+    //   ],
+    // };
+
+    // const actionSheet = await this.actionSheetCtrl.create(ac);
+
+    // actionSheet.present()
+    tarefa.feito = !tarefa.feito;
+    this.tarefaService.atualizar(tarefa, () => {
+      this.listarTarefas();
+    });
   }
 }
