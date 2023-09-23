@@ -13,7 +13,7 @@
       <ion-item (click)="openActions(item)">
         <ion-label>
           <ion-item *ngIf="item.feito == false">
-            <ion-icon slot="start" name="information-circle" color="tertiary"></ion-icon>
+            <ion-icon slot="start" name="information-circle" color="warning"></ion-icon>
             <h3>{{item.tarefa}}</h3>
           </ion-item>
 
@@ -38,3 +38,11 @@
     </ion-fab-button>
   </ion-fab>
 </ion-content>
+
+<ion-footer>
+  <ion-toolbar color="primary">
+    <ion-title class="animate__animated animate__lightSpeedInRight ion-text-center">
+      <h3>V1.0.2</h3>
+    </ion-title>
+  </ion-toolbar>
+</ion-footer>
