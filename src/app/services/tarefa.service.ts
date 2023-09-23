@@ -6,6 +6,7 @@ import { Injectable } from '@angular/core';
 export class TarefaService {
   tarefaCollection: any[] = [];
   key: string = 'tarefaCollection';
+  config: string = 'config';
   constructor() {}
 
   salvar(tarefa: any, callback: any) {
@@ -34,7 +35,7 @@ export class TarefaService {
       return [];
     } else {
       let collection: any[] = JSON.parse(value);
-      collection.sort((a, b) => a.feito - b.feito);
+      collection.sort((a, b) => a.feito - b.feito || a.tarefa.localeCompare(b.tarefa));
       return collection;
     }
   }
@@ -68,8 +69,8 @@ export class TarefaService {
     } else {
       let collection: any[] = JSON.parse(value);
       collection.find((item) => {
-        if (item.tarefa == tarefa.tarefa){
-          item.feito = tarefa.feito
+        if (item.tarefa == tarefa.tarefa) {
+          item.feito = tarefa.feito;
         }
         return item.tarefa == tarefa.tarefa;
       });
@@ -80,5 +81,21 @@ export class TarefaService {
     if (callback != undefined) {
       callback();
     }
+  }
+
+  setConfig(config: any) {
+    localStorage.setItem(this.config, config);
+  }
+
+  getConfig():boolean{
+    let ret = null
+    
+    if (localStorage.getItem(this.config) == "true"){
+      ret = true
+    } else {
+      ret = false
+    }
+
+    return ret
   }
 }

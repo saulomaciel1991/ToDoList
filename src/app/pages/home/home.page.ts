@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import {
   ActionSheetController,
   ActionSheetOptions,
@@ -11,7 +11,7 @@ import { TarefaService } from 'src/app/services/tarefa.service';
   templateUrl: 'home.page.html',
   styleUrls: ['home.page.scss'],
 })
-export class HomePage {
+export class HomePage implements OnInit{
   tarefaCollection: any[] = [];
   ocultaConcluidos: boolean = false;
 
@@ -20,6 +20,10 @@ export class HomePage {
     private tarefaService: TarefaService,
     private actionSheetCtrl: ActionSheetController
   ) {}
+  
+  ngOnInit() {
+    this.ocultaConcluidos = this.tarefaService.getConfig()
+  }
 
   ionViewDidEnter() {
     this.listarTarefas();
@@ -96,6 +100,7 @@ export class HomePage {
 
   alternaFeitos(){
     this.ocultaConcluidos = !this.ocultaConcluidos
+    this.tarefaService.setConfig(this.ocultaConcluidos)
     this.listarTarefas()
   }
 }
