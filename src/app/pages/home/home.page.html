@@ -10,10 +10,11 @@
       <ion-label>Não há Tarefas</ion-label>
     </ion-item>
     <ion-item-sliding *ngFor="let item of tarefaCollection; let i = index">
-      <ion-item>
+      <ion-item (click)="openActions(item)">
         <ion-label>
           <h3>{{item.tarefa}}</h3>
-          <p>{{item.status}}</p>
+          <p *ngIf="item.feito == false">Pendente</p>
+          <p *ngIf="item.feito == true">Feito</p>
         </ion-label>
       </ion-item>
 
