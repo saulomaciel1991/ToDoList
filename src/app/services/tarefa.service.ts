@@ -34,6 +34,7 @@ export class TarefaService {
       return [];
     } else {
       let collection: any[] = JSON.parse(value);
+      collection.sort((a, b) => a.feito - b.feito);
       return collection;
     }
   }

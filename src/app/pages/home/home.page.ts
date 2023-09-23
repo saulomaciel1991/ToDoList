@@ -13,6 +13,8 @@ import { TarefaService } from 'src/app/services/tarefa.service';
 })
 export class HomePage {
   tarefaCollection: any[] = [];
+  ocultaConcluidos: boolean = false;
+
   constructor(
     private alertCtrl: AlertController,
     private tarefaService: TarefaService,
@@ -90,5 +92,10 @@ export class HomePage {
     this.tarefaService.atualizar(tarefa, () => {
       this.listarTarefas();
     });
+  }
+
+  alternaFeitos(){
+    this.ocultaConcluidos = !this.ocultaConcluidos
+    this.listarTarefas()
   }
 }

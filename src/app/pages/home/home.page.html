@@ -17,7 +17,7 @@
             <h3>{{item.tarefa}}</h3>
           </ion-item>
 
-          <ion-item *ngIf="item.feito == true">
+          <ion-item *ngIf="item.feito == true && ocultaConcluidos == false">
             <ion-icon slot="start" name="checkmark-circle" color="success"></ion-icon>
             <h3><del>{{item.tarefa}}</del></h3>
           </ion-item>
@@ -30,6 +30,9 @@
         </ion-item-option>
       </ion-item-options>
     </ion-item-sliding>
+
+    <ion-button color="danger" expand="block" *ngIf="ocultaConcluidos == false" (click)="alternaFeitos()">Esconder Tarefas Feitas</ion-button>
+    <ion-button color="success" expand="block" *ngIf="ocultaConcluidos == true" (click)="alternaFeitos()">Reexibir Tarefas Feitas</ion-button>
   </ion-list>
 
   <ion-fab vertical="bottom" horizontal="end" slot="fixed">
@@ -42,7 +45,7 @@
 <ion-footer>
   <ion-toolbar color="primary">
     <ion-title class="animate__animated animate__lightSpeedInRight ion-text-center">
-      <h3>V1.0.2</h3>
+      <h3>V1.0.3</h3>
     </ion-title>
   </ion-toolbar>
 </ion-footer>
