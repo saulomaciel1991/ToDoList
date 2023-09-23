@@ -1,11 +1,11 @@
 <ion-header [translucent]="true" mode="ios">
   <ion-toolbar color="primary">
-    <ion-title> Lista de Tarefas </ion-title>
+    <ion-title class="animate__animated animate__lightSpeedInRight"> Lista de Tarefas </ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true" mode="ios">
-  <ion-list>
+  <ion-list class="animate__animated animate__lightSpeedInLeft">
     <ion-item *ngIf="tarefaCollection.length < 1">
       <ion-label>Não há Tarefas</ion-label>
     </ion-item>
