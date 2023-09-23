@@ -44,7 +44,7 @@
 
       <ng-template #loading>
         <ion-label>
-          <ion-item *ngIf="item.feito == false">
+          <ion-item (click)="openActions(item)" *ngIf="item.feito == false">
             <ion-icon
               slot="start"
               name="information-circle"
