@@ -46,27 +46,25 @@
       </ng-template>
 
       <ng-template #loading>
-        <ion-item *ngIf="item.feito == false">
-          <ion-label>
-            <ion-item (click)="openActions(item)">
-              <ion-icon
-                slot="start"
-                name="information-circle"
-                color="warning"
-              ></ion-icon>
-              <h3>{{item.tarefa}}</h3>
-            </ion-item>
-          </ion-label>
+        <ion-label>
+          <ion-item (click)="openActions(item)" *ngIf="item.feito == false">
+            <ion-icon
+              slot="start"
+              name="information-circle"
+              color="warning"
+            ></ion-icon>
+            <h3>{{item.tarefa}}</h3>
+          </ion-item>
+        </ion-label>
 
-          <ion-item-options>
-            <!-- <ion-item-option color="warning">
+        <ion-item-options>
+          <!-- <ion-item-option color="warning">
               <ion-icon name="create"></ion-icon>
             </ion-item-option> -->
-            <ion-item-option color="danger" (click)="excluir(item)">
-              <ion-icon name="trash"></ion-icon>
-            </ion-item-option>
-          </ion-item-options>
-        </ion-item>
+          <ion-item-option color="danger" (click)="excluir(item)">
+            <ion-icon name="trash"></ion-icon>
+          </ion-item-option>
+        </ion-item-options>
       </ng-template>
     </ion-item-sliding>
 
