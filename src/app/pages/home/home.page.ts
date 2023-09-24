@@ -6,23 +6,35 @@ import {
 } from '@ionic/angular';
 import { TarefaService } from 'src/app/services/tarefa.service';
 
+import { Optional } from '@angular/core';
+import { IonRouterOutlet, Platform } from '@ionic/angular';
+import { App } from '@capacitor/app';
+
 @Component({
   selector: 'app-home',
   templateUrl: 'home.page.html',
   styleUrls: ['home.page.scss'],
 })
-export class HomePage implements OnInit{
+export class HomePage implements OnInit {
   tarefaCollection: any[] = [];
   ocultaConcluidos: boolean = false;
-
+  
   constructor(
     private alertCtrl: AlertController,
     private tarefaService: TarefaService,
-    private actionSheetCtrl: ActionSheetController
-  ) {}
-  
+    private actionSheetCtrl: ActionSheetController,
+    private platform: Platform,
+    @Optional() private routerOutlet: IonRouterOutlet
+  ) {
+    this.platform.backButton.subscribeWithPriority(-1, () => {
+      if (!this.routerOutlet.canGoBack()) {
+        App.exitApp();
+      }
+    });
+  }
+
   ngOnInit() {
-    this.ocultaConcluidos = this.tarefaService.getConfig()
+    this.ocultaConcluidos = this.tarefaService.getConfig();
   }
 
   ionViewDidEnter() {
@@ -72,35 +84,35 @@ export class HomePage implements OnInit{
   }
 
   async openActions(tarefa: any) {
-    // let ac: ActionSheetOptions = {
-    //   header: 'O que deseja Fazer?',
-    //   buttons: [
-    //     {
-    //       text: tarefa.feito ? 'Pendente' : 'Feito',
-    //       icon: tarefa.feito ? 'square-outline' : 'checkbox',
-    //       handler: () => {
-    //         tarefa.feito = !tarefa.feito;
+    let ac: ActionSheetOptions = {
+      header: 'O que deseja Fazer?',
+      buttons: [
+        {
+          text: tarefa.feito ? 'Pendente' : 'Feito',
+          icon: tarefa.feito ? 'square-outline' : 'checkbox',
+          handler: () => {
+            tarefa.feito = !tarefa.feito;
 
-    //         this.tarefaService.atualizar(tarefa, () => {
-    //           this.listarTarefas()
-    //         })
-    //       },
-    //     },
-    //   ],
-    // };
+            this.tarefaService.atualizar(tarefa, () => {
+              this.listarTarefas()
+            })
+          },
+        },
+      ],
+    };
 
-    // const actionSheet = await this.actionSheetCtrl.create(ac);
+    const actionSheet = await this.actionSheetCtrl.create(ac);
 
-    // actionSheet.present()
-    tarefa.feito = !tarefa.feito;
-    this.tarefaService.atualizar(tarefa, () => {
-      this.listarTarefas();
-    });
+    actionSheet.present()
+    // tarefa.feito = !tarefa.feito;
+    // this.tarefaService.atualizar(tarefa, () => {
+    //   this.listarTarefas();
+    // });
   }
 
-  alternaFeitos(){
-    this.ocultaConcluidos = !this.ocultaConcluidos
-    this.tarefaService.setConfig(this.ocultaConcluidos)
-    this.listarTarefas()
+  alternaFeitos() {
+    this.ocultaConcluidos = !this.ocultaConcluidos;
+    this.tarefaService.setConfig(this.ocultaConcluidos);
+    this.listarTarefas();
   }
 }
