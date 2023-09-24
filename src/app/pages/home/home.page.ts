@@ -85,11 +85,11 @@ export class HomePage implements OnInit {
 
   async openActions(tarefa: any) {
     let ac: ActionSheetOptions = {
-      header: 'O que deseja Fazer?',
+      header: 'Mudar Status?',
       buttons: [
         {
           text: tarefa.feito ? 'Pendente' : 'Feito',
-          icon: tarefa.feito ? 'square-outline' : 'checkbox',
+          icon: tarefa.feito ? 'information-circle' : 'checkmark-circle',
           handler: () => {
             tarefa.feito = !tarefa.feito;
 
