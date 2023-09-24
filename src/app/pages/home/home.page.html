@@ -34,6 +34,9 @@
         </ion-label>
 
         <ion-item-options>
+          <ion-item-option color="primary" (click)="atualizar(item)">
+            <ion-icon name="create"></ion-icon>
+          </ion-item-option>
           <ion-item-option color="danger" (click)="excluir(item)">
             <ion-icon name="trash"></ion-icon>
           </ion-item-option>
@@ -91,7 +94,7 @@
     <ion-title
       class="animate__animated animate__lightSpeedInRight ion-text-center"
     >
-      <h3>V1.0.6</h3>
+      <h3>V1.0.7</h3>
     </ion-title>
   </ion-toolbar>
 </ion-footer>

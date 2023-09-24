@@ -51,6 +51,13 @@ export class HomePage implements OnInit {
     });
   }
 
+  atualizar(item: any) {
+    // this.tarefaService.excluir(item, () => {
+    //   this.listarTarefas();
+    // });
+    this.showEdit(item)
+  }
+
   async showAdd() {
     const alert = await this.alertCtrl.create({
       header: 'Informe a Tarefa',
@@ -73,6 +80,39 @@ export class HomePage implements OnInit {
           text: 'Salvar',
           handler: (tarefa) => {
             this.tarefaService.salvar(tarefa, () => {
+              this.listarTarefas();
+            });
+          },
+        },
+      ],
+    });
+
+    alert.present();
+  }
+
+  async showEdit(tarefa : any) {
+    const alert = await this.alertCtrl.create({
+      header: 'Atualize a Tarefa',
+      inputs: [
+        {
+          name: 'tarefa',
+          type: 'text',
+          value: tarefa.tarefa,
+        },
+      ],
+
+      buttons: [
+        {
+          text: 'Cancelar',
+          role: 'cancel',
+          cssClass: 'secondary',
+          handler: () => {},
+        },
+        {
+          text: 'Salvar',
+          handler: (form) => {
+            tarefa.tarefa = form.tarefa
+            this.tarefaService.atualizar(tarefa, () => {
               this.listarTarefas();
             });
           },

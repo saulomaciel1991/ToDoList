@@ -15,10 +15,12 @@ export class TarefaService {
     let value = localStorage.getItem(this.key);
 
     if (value == null || value == undefined) {
+      tarefa.id = this.tarefaCollection.length + 1;
       this.tarefaCollection.push(tarefa);
       localStorage.setItem(this.key, JSON.stringify(this.tarefaCollection));
     } else {
       let collection: any[] = JSON.parse(value);
+      tarefa.id = this.tarefaCollection.length + 1;
       collection.push(tarefa);
       localStorage.setItem(this.key, JSON.stringify(collection));
     }
@@ -35,7 +37,9 @@ export class TarefaService {
       return [];
     } else {
       let collection: any[] = JSON.parse(value);
-      collection.sort((a, b) => a.feito - b.feito || a.tarefa.localeCompare(b.tarefa));
+      collection.sort(
+        (a, b) => a.feito - b.feito || a.tarefa.localeCompare(b.tarefa)
+      );
       return collection;
     }
   }
@@ -63,17 +67,18 @@ export class TarefaService {
 
   atualizar(tarefa: any, callback: any) {
     let value = localStorage.getItem(this.key);
-
     if (value == null || value == undefined) {
       return;
     } else {
       let collection: any[] = JSON.parse(value);
-      collection.find((item) => {
-        if (item.tarefa == tarefa.tarefa) {
-          item.feito = tarefa.feito;
-        }
-        return item.tarefa == tarefa.tarefa;
+      let pos = collection.findIndex((item) => {
+        return item.id == tarefa.id;
       });
+
+      debugger
+      if (pos > -1) {
+        collection[pos] = tarefa
+      }
 
       localStorage.setItem(this.key, JSON.stringify(collection));
     }
@@ -87,15 +92,15 @@ export class TarefaService {
     localStorage.setItem(this.config, config);
   }
 
-  getConfig():boolean{
-    let ret = null
-    
-    if (localStorage.getItem(this.config) == "true"){
-      ret = true
+  getConfig(): boolean {
+    let ret = null;
+
+    if (localStorage.getItem(this.config) == 'true') {
+      ret = true;
     } else {
-      ret = false
+      ret = false;
     }
 
-    return ret
+    return ret;
   }
 }
