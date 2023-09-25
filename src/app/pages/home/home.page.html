@@ -56,9 +56,9 @@
         </ion-label>
 
         <ion-item-options>
-          <!-- <ion-item-option color="warning">
-              <ion-icon name="create"></ion-icon>
-            </ion-item-option> -->
+          <ion-item-option color="primary" (click)="atualizar(item)">
+            <ion-icon name="create"></ion-icon>
+          </ion-item-option>
           <ion-item-option color="danger" (click)="excluir(item)">
             <ion-icon name="trash"></ion-icon>
           </ion-item-option>

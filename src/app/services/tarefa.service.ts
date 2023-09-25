@@ -11,7 +11,6 @@ export class TarefaService {
 
   salvar(tarefa: any, callback: any) {
     tarefa.feito = false;
-
     let value = localStorage.getItem(this.key);
 
     if (value == null || value == undefined) {
@@ -20,7 +19,7 @@ export class TarefaService {
       localStorage.setItem(this.key, JSON.stringify(this.tarefaCollection));
     } else {
       let collection: any[] = JSON.parse(value);
-      tarefa.id = this.tarefaCollection.length + 1;
+      tarefa.id = collection.length + 1;
       collection.push(tarefa);
       localStorage.setItem(this.key, JSON.stringify(collection));
     }
@@ -51,9 +50,8 @@ export class TarefaService {
       return;
     } else {
       let collection: any[] = JSON.parse(value);
-
       collection = collection.filter((tarefa) => {
-        return tarefa.tarefa != item.tarefa;
+        return tarefa.id != item.id;
       });
 
       localStorage.setItem(this.key, JSON.stringify(collection));
@@ -75,9 +73,8 @@ export class TarefaService {
         return item.id == tarefa.id;
       });
 
-      debugger
       if (pos > -1) {
-        collection[pos] = tarefa
+        collection[pos] = tarefa;
       }
 
       localStorage.setItem(this.key, JSON.stringify(collection));
