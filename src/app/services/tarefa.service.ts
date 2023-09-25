@@ -19,7 +19,12 @@ export class TarefaService {
       localStorage.setItem(this.key, JSON.stringify(this.tarefaCollection));
     } else {
       let collection: any[] = JSON.parse(value);
-      tarefa.id = collection.length + 1;
+      let pos = collection.length - 1;
+      if (pos == -1) {
+        tarefa.id = 1;
+      } else {
+        tarefa.id = collection[pos].id + 1;
+      }
       collection.push(tarefa);
       localStorage.setItem(this.key, JSON.stringify(collection));
     }
