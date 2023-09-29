@@ -18,7 +18,8 @@ import { App } from '@capacitor/app';
 export class HomePage implements OnInit {
   tarefaCollection: any[] = [];
   ocultaConcluidos: boolean = false;
-  
+  tarefaAtual: any = { id: '', tarefa: '', status: '' }
+
   constructor(
     private alertCtrl: AlertController,
     private tarefaService: TarefaService,
@@ -55,25 +56,40 @@ export class HomePage implements OnInit {
     // this.tarefaService.excluir(item, () => {
     //   this.listarTarefas();
     // });
-    this.showEdit(item)
+    this.tarefaAtual = item
+    this.edit()
+    // this.showEdit(item)
   }
 
-  async add(){
-    const inputTarefa : any = document.querySelector("#input-tarefa")
-    const tarefa = {tarefa: inputTarefa.value}
-    
-    if(inputTarefa.value.trim() <= 0){
+  async edit() {
+    const inputTarefa: any = document.querySelector("#input-tarefa")
+    inputTarefa.value = this.tarefaAtual.tarefa
+  }
+
+  async add() {
+    const inputTarefa: any = document.querySelector("#input-tarefa")
+    const tarefa = { tarefa: inputTarefa.value }
+
+    if (inputTarefa.value.trim() <= 0) {
       return
     }
-    
-    this.tarefaService.salvar(tarefa, () => {
-      this.limpar()
-      this.listarTarefas();
-    });
+
+    if (this.tarefaAtual.id != '') {
+      this.tarefaAtual.tarefa = inputTarefa.value
+      this.tarefaService.atualizar(this.tarefaAtual, () => {
+        this.limpar()
+        this.listarTarefas();
+      });
+    } else {
+      this.tarefaService.salvar(tarefa, () => {
+        this.limpar()
+        this.listarTarefas();
+      });
+    }
   }
 
-  limpar(){
-    const inputTarefa : any = document.querySelector("#input-tarefa")
+  limpar() {
+    const inputTarefa: any = document.querySelector("#input-tarefa")
     inputTarefa.value = ''
   }
 
@@ -93,7 +109,7 @@ export class HomePage implements OnInit {
           text: 'Cancelar',
           role: 'cancel',
           cssClass: 'secondary',
-          handler: () => {},
+          handler: () => { },
         },
         {
           text: 'Salvar',
@@ -109,7 +125,7 @@ export class HomePage implements OnInit {
     alert.present();
   }
 
-  async showEdit(tarefa : any) {
+  async showEdit(tarefa: any) {
     const alert = await this.alertCtrl.create({
       header: 'Atualize a Tarefa',
       inputs: [
@@ -125,7 +141,7 @@ export class HomePage implements OnInit {
           text: 'Cancelar',
           role: 'cancel',
           cssClass: 'secondary',
-          handler: () => {},
+          handler: () => { },
         },
         {
           text: 'Salvar',
