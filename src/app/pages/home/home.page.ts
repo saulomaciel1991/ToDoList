@@ -58,6 +58,25 @@ export class HomePage implements OnInit {
     this.showEdit(item)
   }
 
+  async add(){
+    const inputTarefa : any = document.querySelector("#input-tarefa")
+    const tarefa = {tarefa: inputTarefa.value}
+    
+    if(inputTarefa.value.trim() <= 0){
+      return
+    }
+    
+    this.tarefaService.salvar(tarefa, () => {
+      this.limpar()
+      this.listarTarefas();
+    });
+  }
+
+  limpar(){
+    const inputTarefa : any = document.querySelector("#input-tarefa")
+    inputTarefa.value = ''
+  }
+
   async showAdd() {
     const alert = await this.alertCtrl.create({
       header: 'Informe a Tarefa',
