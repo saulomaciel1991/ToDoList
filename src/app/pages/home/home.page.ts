@@ -76,7 +76,6 @@ export class HomePage implements OnInit {
   async add() {
     const inputTarefa: any = document.querySelector("#input-tarefa")
     const tarefa = { tarefa: inputTarefa.value }
-    debugger
     if (inputTarefa.value.trim() <= 0) {
       return
     }
@@ -201,5 +200,17 @@ export class HomePage implements OnInit {
     this.ocultaConcluidos = !this.ocultaConcluidos;
     this.tarefaService.setConfig("ocultaConcluidos", this.ocultaConcluidos);
     this.listarTarefas();
+  }
+
+  excluirTarefasFeitas() {
+    this.tarefaService.excluirConcluidos(() => {
+      this.listarTarefas();
+    })
+  }
+
+  concluirTodas() {
+    this.tarefaService.concluirTodas(() => {
+      this.listarTarefas();
+    })
   }
 }

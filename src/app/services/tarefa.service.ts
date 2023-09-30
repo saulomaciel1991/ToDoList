@@ -67,6 +67,44 @@ export class TarefaService {
     }
   }
 
+  excluirConcluidos(callback: any) {
+    let value = localStorage.getItem(this.key);
+    if (value == null || value == undefined) {
+      return;
+    } else {
+      let collection: any[] = JSON.parse(value);
+      collection = collection.filter((tarefa) => {
+        return tarefa.feito === false
+      });
+
+      localStorage.setItem(this.key, JSON.stringify(collection));
+
+      if (callback != undefined) {
+        callback();
+      }
+      return;
+    }
+  }
+
+  concluirTodas(callback: any) {
+    let value = localStorage.getItem(this.key);
+    if (value == null || value == undefined) {
+      return;
+    } else {
+      let collection: any[] = JSON.parse(value);
+      collection = collection.filter((tarefa) => {
+        return tarefa.feito = true
+      });
+
+      localStorage.setItem(this.key, JSON.stringify(collection));
+
+      if (callback != undefined) {
+        callback();
+      }
+      return;
+    }
+  }
+
   atualizar(tarefa: any, callback: any) {
     let value = localStorage.getItem(this.key);
     if (value == null || value == undefined) {

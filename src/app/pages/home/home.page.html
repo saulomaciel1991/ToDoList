@@ -5,7 +5,11 @@
     </ion-toolbar>
   </ion-header>
   <ion-content class="ion-padding">
-    <ion-toggle [enableOnOffLabels]="true" [checked]="marcacaoSimples" (ionChange)="alternaMarcacao()">Marcação Simples</ion-toggle>
+    <ion-toggle [enableOnOffLabels]="true" [checked]="marcacaoSimples" (ionChange)="alternaMarcacao()">Marcação
+      Simples</ion-toggle>
+
+      <ion-button size="small" fill="clear" class="ion-margin-vertical" color="warning" (click)="concluirTodas()">Concluir Todas</ion-button>
+      <ion-button size="small" fill="clear" class="ion-margin-vertical" color="danger" (click)="excluirTarefasFeitas()">Limpar Concluídas</ion-button>
   </ion-content>
 </ion-menu>
 
@@ -46,7 +50,7 @@
           </ion-card>
         </ion-col>
       </ion-row>
-  
+
       <ion-row>
         <ion-col size-md="6" offset-md="3">
           <ion-list class="animate__animated animate__lightSpeedInLeft ion-margin-horizontal">
@@ -60,13 +64,13 @@
                     <ion-icon slot="start" name="information-circle" color="warning"></ion-icon>
                     <h3>{{item.tarefa}}</h3>
                   </ion-item>
-  
+
                   <ion-item (click)="openActions(item)" *ngIf="item.feito == true">
                     <ion-icon slot="start" name="checkmark-circle" color="success"></ion-icon>
                     <h3><del>{{item.tarefa}}</del></h3>
                   </ion-item>
                 </ion-label>
-  
+
                 <ion-item-options>
                   <ion-item-option color="primary" (click)="atualizar(item)">
                     <ion-icon name="create"></ion-icon>
@@ -76,7 +80,7 @@
                   </ion-item-option>
                 </ion-item-options>
               </ng-template>
-  
+
               <ng-template #loading>
                 <ion-label>
                   <ion-item (click)="openActions(item)" *ngIf="item.feito == false">
@@ -84,7 +88,7 @@
                     <h3>{{item.tarefa}}</h3>
                   </ion-item>
                 </ion-label>
-  
+
                 <ion-item-options>
                   <ion-item-option color="primary" (click)="atualizar(item)">
                     <ion-icon name="create"></ion-icon>
@@ -95,22 +99,24 @@
                 </ion-item-options>
               </ng-template>
             </ion-item-sliding>
-  
-            <ion-button class="ion-margin-vertical" color="danger" expand="block" *ngIf="ocultaConcluidos == false" (click)="alternaFeitos()">Esconder
-              Tarefas Feitas</ion-button>
-            <ion-button class="ion-margin-vertical" color="success" expand="block" *ngIf="ocultaConcluidos == true" (click)="alternaFeitos()">Reexibir
-              Tarefas Feitas</ion-button>
+
+            <ion-button class="ion-margin-vertical" color="warning" expand="block" *ngIf="ocultaConcluidos == false"
+              (click)="alternaFeitos()">Esconder
+              Concluídas</ion-button>
+            <ion-button class="ion-margin-vertical" color="success" expand="block" *ngIf="ocultaConcluidos == true"
+              (click)="alternaFeitos()">Reexibir
+              Concluídas</ion-button>
           </ion-list>
         </ion-col>
       </ion-row>
     </ion-grid>
-    
+
   </ion-content>
 
   <ion-footer>
     <ion-toolbar color="primary">
       <ion-title class="animate__animated animate__lightSpeedInRight ion-text-center">
-        <h3>V1.0.10</h3>
+        <h3>V1.1.1</h3>
       </ion-title>
     </ion-toolbar>
   </ion-footer>
