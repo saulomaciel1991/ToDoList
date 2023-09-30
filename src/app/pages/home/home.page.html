@@ -1,101 +1,117 @@
-<ion-header [translucent]="true" mode="ios">
-  <ion-toolbar color="primary">
-    <ion-title class="animate__animated animate__lightSpeedInRight">
-      Lista de Tarefas
-    </ion-title>
-  </ion-toolbar>
-</ion-header>
+<ion-menu contentId="main-content">
+  <ion-header>
+    <ion-toolbar>
+      <ion-title>Configurações</ion-title>
+    </ion-toolbar>
+  </ion-header>
+  <ion-content class="ion-padding">
+    <ion-toggle [enableOnOffLabels]="true" [checked]="marcacaoSimples" (ionChange)="alternaMarcacao()">Marcação Simples</ion-toggle>
+  </ion-content>
+</ion-menu>
 
-<ion-content [fullscreen]="true" mode="ios">
-  <ion-grid>
-    <ion-row>
-      <ion-col size-md="6" offset-md="3">
-        <ion-card>
-          <ion-card-header>
-            <ion-card-title class="ion-text-center">Nova Tarefa</ion-card-title>
-          </ion-card-header>
-          <ion-card-content class="ion-text-center">
-            <ion-item class="ion-margin-vertical">
-              <ion-label position="floating">Descrição da Tarefa</ion-label>
-              <ion-input type="text" id="input-tarefa"></ion-input>
+<div class="ion-page" id="main-content">
+  <ion-header [translucent]="true" mode="ios">
+    <ion-toolbar color="primary">
+      <ion-buttons slot="start">
+        <ion-menu-button></ion-menu-button>
+      </ion-buttons>
+      <ion-title class="animate__animated animate__lightSpeedInRight">
+        Lista de Tarefas
+      </ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+  <ion-content [fullscreen]="true" mode="ios">
+    <ion-grid>
+      <ion-row>
+        <ion-col size-md="6" offset-md="3">
+          <ion-card>
+            <ion-card-header>
+              <ion-card-title class="ion-text-center">Nova Tarefa</ion-card-title>
+            </ion-card-header>
+            <ion-card-content class="ion-text-center">
+              <ion-item class="ion-margin-vertical">
+                <ion-label aria-labelledby="input-tarefa" position="floating">Descrição da Tarefa</ion-label>
+                <ion-input aria-label="Descrição da Tarefa" type="text" id="input-tarefa"></ion-input>
+              </ion-item>
+              <div class="ion-text-right">
+                <ion-button color="danger" (click)="limpar()">
+                  <ion-icon name="trash" slot="start"></ion-icon>
+                  Limpar</ion-button>
+                <ion-button (click)="add()">
+                  <ion-icon name="add-circle" slot="start"></ion-icon>
+                  Salvar Tarefa</ion-button>
+              </div>
+            </ion-card-content>
+          </ion-card>
+        </ion-col>
+      </ion-row>
+  
+      <ion-row>
+        <ion-col size-md="6" offset-md="3">
+          <ion-list class="animate__animated animate__lightSpeedInLeft ion-margin-horizontal">
+            <ion-item *ngIf="tarefaCollection.length < 1">
+              <ion-label>Não há Tarefas</ion-label>
             </ion-item>
-            <div class="ion-text-right">
-              <ion-button color="danger" (click)="limpar()">
-                <ion-icon name="trash" slot="start"></ion-icon>
-                Limpar</ion-button>
-              <ion-button (click)="add()">
-                <ion-icon name="add-circle" slot="start"></ion-icon>
-                Salvar Tarefa</ion-button>
-            </div>
-          </ion-card-content>
-        </ion-card>
-      </ion-col>
-    </ion-row>
+            <ion-item-sliding *ngFor="let item of tarefaCollection; let i = index">
+              <ng-template [ngIf]="ocultaConcluidos == false" [ngIfElse]="loading">
+                <ion-label>
+                  <ion-item (click)="openActions(item)" *ngIf="item.feito == false">
+                    <ion-icon slot="start" name="information-circle" color="warning"></ion-icon>
+                    <h3>{{item.tarefa}}</h3>
+                  </ion-item>
+  
+                  <ion-item (click)="openActions(item)" *ngIf="item.feito == true">
+                    <ion-icon slot="start" name="checkmark-circle" color="success"></ion-icon>
+                    <h3><del>{{item.tarefa}}</del></h3>
+                  </ion-item>
+                </ion-label>
+  
+                <ion-item-options>
+                  <ion-item-option color="primary" (click)="atualizar(item)">
+                    <ion-icon name="create"></ion-icon>
+                  </ion-item-option>
+                  <ion-item-option color="danger" (click)="excluir(item)">
+                    <ion-icon name="trash"></ion-icon>
+                  </ion-item-option>
+                </ion-item-options>
+              </ng-template>
+  
+              <ng-template #loading>
+                <ion-label>
+                  <ion-item (click)="openActions(item)" *ngIf="item.feito == false">
+                    <ion-icon slot="start" name="information-circle" color="warning"></ion-icon>
+                    <h3>{{item.tarefa}}</h3>
+                  </ion-item>
+                </ion-label>
+  
+                <ion-item-options>
+                  <ion-item-option color="primary" (click)="atualizar(item)">
+                    <ion-icon name="create"></ion-icon>
+                  </ion-item-option>
+                  <ion-item-option color="danger" (click)="excluir(item)">
+                    <ion-icon name="trash"></ion-icon>
+                  </ion-item-option>
+                </ion-item-options>
+              </ng-template>
+            </ion-item-sliding>
+  
+            <ion-button class="ion-margin-vertical" color="danger" expand="block" *ngIf="ocultaConcluidos == false" (click)="alternaFeitos()">Esconder
+              Tarefas Feitas</ion-button>
+            <ion-button class="ion-margin-vertical" color="success" expand="block" *ngIf="ocultaConcluidos == true" (click)="alternaFeitos()">Reexibir
+              Tarefas Feitas</ion-button>
+          </ion-list>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+    
+  </ion-content>
 
-    <ion-row>
-      <ion-col size-md="6" offset-md="3">
-        <ion-list class="animate__animated animate__lightSpeedInLeft ion-margin-horizontal">
-          <ion-item *ngIf="tarefaCollection.length < 1">
-            <ion-label>Não há Tarefas</ion-label>
-          </ion-item>
-          <ion-item-sliding *ngFor="let item of tarefaCollection; let i = index">
-            <ng-template [ngIf]="ocultaConcluidos == false" [ngIfElse]="loading">
-              <ion-label>
-                <ion-item (click)="openActions(item)" *ngIf="item.feito == false">
-                  <ion-icon slot="start" name="information-circle" color="warning"></ion-icon>
-                  <h3>{{item.tarefa}}</h3>
-                </ion-item>
-
-                <ion-item (click)="openActions(item)" *ngIf="item.feito == true">
-                  <ion-icon slot="start" name="checkmark-circle" color="success"></ion-icon>
-                  <h3><del>{{item.tarefa}}</del></h3>
-                </ion-item>
-              </ion-label>
-
-              <ion-item-options>
-                <ion-item-option color="primary" (click)="atualizar(item)">
-                  <ion-icon name="create"></ion-icon>
-                </ion-item-option>
-                <ion-item-option color="danger" (click)="excluir(item)">
-                  <ion-icon name="trash"></ion-icon>
-                </ion-item-option>
-              </ion-item-options>
-            </ng-template>
-
-            <ng-template #loading>
-              <ion-label>
-                <ion-item (click)="openActions(item)" *ngIf="item.feito == false">
-                  <ion-icon slot="start" name="information-circle" color="warning"></ion-icon>
-                  <h3>{{item.tarefa}}</h3>
-                </ion-item>
-              </ion-label>
-
-              <ion-item-options>
-                <ion-item-option color="primary" (click)="atualizar(item)">
-                  <ion-icon name="create"></ion-icon>
-                </ion-item-option>
-                <ion-item-option color="danger" (click)="excluir(item)">
-                  <ion-icon name="trash"></ion-icon>
-                </ion-item-option>
-              </ion-item-options>
-            </ng-template>
-          </ion-item-sliding>
-
-          <ion-button class="ion-margin-vertical" color="danger" expand="block" *ngIf="ocultaConcluidos == false" (click)="alternaFeitos()">Esconder
-            Tarefas Feitas</ion-button>
-          <ion-button class="ion-margin-vertical" color="success" expand="block" *ngIf="ocultaConcluidos == true" (click)="alternaFeitos()">Reexibir
-            Tarefas Feitas</ion-button>
-        </ion-list>
-      </ion-col>
-    </ion-row>
-  </ion-grid>
-
-</ion-content>
-
-<ion-footer>
-  <ion-toolbar color="primary">
-    <ion-title class="animate__animated animate__lightSpeedInRight ion-text-center">
-      <h3>V1.0.9</h3>
-    </ion-title>
-  </ion-toolbar>
-</ion-footer>
+  <ion-footer>
+    <ion-toolbar color="primary">
+      <ion-title class="animate__animated animate__lightSpeedInRight ion-text-center">
+        <h3>V1.0.10</h3>
+      </ion-title>
+    </ion-toolbar>
+  </ion-footer>
+</div>

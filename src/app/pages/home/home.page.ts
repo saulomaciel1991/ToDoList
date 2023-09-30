@@ -19,6 +19,7 @@ export class HomePage implements OnInit {
   tarefaCollection: any[] = [];
   ocultaConcluidos: boolean = false;
   tarefaAtual: any = { id: '', tarefa: '', status: '' }
+  marcacaoSimples: boolean = false
 
   constructor(
     private alertCtrl: AlertController,
@@ -35,11 +36,17 @@ export class HomePage implements OnInit {
   }
 
   ngOnInit() {
-    this.ocultaConcluidos = this.tarefaService.getConfig();
+    this.ocultaConcluidos = this.tarefaService.getConfig('ocultaConcluidos');
+    this.marcacaoSimples = this.tarefaService.getConfig('marcacaoSimples');
   }
 
   ionViewDidEnter() {
     this.listarTarefas();
+  }
+
+  alternaMarcacao() {
+    this.marcacaoSimples = !this.marcacaoSimples
+    this.tarefaService.setConfig("marcacaoSimples", this.marcacaoSimples);
   }
 
   listarTarefas() {
@@ -159,35 +166,38 @@ export class HomePage implements OnInit {
   }
 
   async openActions(tarefa: any) {
-    let ac: ActionSheetOptions = {
-      header: 'Mudar Status?',
-      buttons: [
-        {
-          text: tarefa.feito ? 'Pendente' : 'Feito',
-          icon: tarefa.feito ? 'information-circle' : 'checkmark-circle',
-          handler: () => {
-            tarefa.feito = !tarefa.feito;
 
-            this.tarefaService.atualizar(tarefa, () => {
-              this.listarTarefas()
-            })
+    if (this.marcacaoSimples) {
+      tarefa.feito = !tarefa.feito;
+      this.tarefaService.atualizar(tarefa, () => {
+        this.listarTarefas();
+      });
+    } else {
+      let ac: ActionSheetOptions = {
+        header: 'Mudar Status para?',
+        buttons: [
+          {
+            text: tarefa.feito ? 'Pendente' : 'Concluido',
+            icon: tarefa.feito ? 'information-circle' : 'checkmark-circle',
+            handler: () => {
+              tarefa.feito = !tarefa.feito;
+
+              this.tarefaService.atualizar(tarefa, () => {
+                this.listarTarefas()
+              })
+            },
           },
-        },
-      ],
-    };
+        ],
+      };
 
-    const actionSheet = await this.actionSheetCtrl.create(ac);
-
-    actionSheet.present()
-    // tarefa.feito = !tarefa.feito;
-    // this.tarefaService.atualizar(tarefa, () => {
-    //   this.listarTarefas();
-    // });
+      const actionSheet = await this.actionSheetCtrl.create(ac);
+      actionSheet.present()
+    }
   }
 
   alternaFeitos() {
     this.ocultaConcluidos = !this.ocultaConcluidos;
-    this.tarefaService.setConfig(this.ocultaConcluidos);
+    this.tarefaService.setConfig("ocultaConcluidos",this.ocultaConcluidos);
     this.listarTarefas();
   }
 }

@@ -6,7 +6,6 @@ import { Injectable } from '@angular/core';
 export class TarefaService {
   tarefaCollection: any[] = [];
   key: string = 'tarefaCollection';
-  config: string = 'config';
   constructor() {}
 
   salvar(tarefa: any, callback: any) {
@@ -90,19 +89,22 @@ export class TarefaService {
     }
   }
 
-  setConfig(config: any) {
-    localStorage.setItem(this.config, config);
+  setConfig(key: string, value: any) {
+    localStorage.setItem(key, value);
   }
 
-  getConfig(): boolean {
-    let ret = null;
-
-    if (localStorage.getItem(this.config) == 'true') {
-      ret = true;
-    } else {
-      ret = false;
+  getConfig(key: string): any {
+    let result = localStorage.getItem(key)
+    let ret = null
+    
+    if (result === 'true'){
+      ret = true
+    }else if( result === 'false' || result === undefined || result === null){
+      ret = false
+    }else{
+      ret = result
     }
 
-    return ret;
+    return ret
   }
 }
