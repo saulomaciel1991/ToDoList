@@ -6,7 +6,7 @@ import { Injectable } from '@angular/core';
 export class TarefaService {
   tarefaCollection: any[] = [];
   key: string = 'tarefaCollection';
-  constructor() {}
+  constructor() { }
 
   salvar(tarefa: any, callback: any) {
     tarefa.feito = false;
@@ -127,6 +127,20 @@ export class TarefaService {
     }
   }
 
+  getbyId(tarefaId: string) {
+    let tarefas = this.listar()
+
+    if (tarefas != null){
+      return {
+        ...tarefas.find(tarefa => {
+          return tarefa.id == tarefaId
+        })
+      }
+    }
+
+    
+  }
+
   setConfig(key: string, value: any) {
     localStorage.setItem(key, value);
   }
@@ -134,12 +148,12 @@ export class TarefaService {
   getConfig(key: string): any {
     let result = localStorage.getItem(key)
     let ret = null
-    
-    if (result === 'true'){
+
+    if (result === 'true') {
       ret = true
-    }else if( result === 'false' || result === undefined || result === null){
+    } else if (result === 'false' || result === undefined || result === null) {
       ret = false
-    }else{
+    } else {
       ret = result
     }
 

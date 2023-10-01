@@ -9,6 +9,7 @@ import { TarefaService } from 'src/app/services/tarefa.service';
 import { Optional } from '@angular/core';
 import { IonRouterOutlet, Platform } from '@ionic/angular';
 import { App } from '@capacitor/app';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-home',
@@ -26,6 +27,7 @@ export class HomePage implements OnInit {
     private tarefaService: TarefaService,
     private actionSheetCtrl: ActionSheetController,
     private platform: Platform,
+    private router: Router,
     @Optional() private routerOutlet: IonRouterOutlet
   ) {
     this.platform.backButton.subscribeWithPriority(-1, () => {
@@ -188,6 +190,13 @@ export class HomePage implements OnInit {
               })
             },
           },
+          {
+            text: 'Detalhes',
+            icon: 'information',
+            handler: () => {
+              this.router.navigate(['/home/'+tarefa.id])
+            },
+          }
         ],
       };
 
