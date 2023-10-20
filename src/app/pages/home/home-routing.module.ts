@@ -8,9 +8,14 @@ const routes: Routes = [
     component: HomePage,
   },
   {
-    path: 'detail',
-    loadChildren: () => import('./detail/detail.module').then( m => m.DetailPageModule)
+    path: 'editar/:tarefaId',
+    loadChildren: () => import('./editar/editar.module').then( m => m.EditarPageModule)
+  },
+  {
+    path: 'novo',
+    loadChildren: () => import('./novo/novo.module').then( m => m.NovoPageModule)
   }
+
 ];
 
 @NgModule({
