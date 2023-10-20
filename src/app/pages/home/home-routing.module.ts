@@ -7,19 +7,24 @@ const routes: Routes = [
     path: '',
     component: HomePage,
   },
-  {
-    path: 'editar/:tarefaId',
-    loadChildren: () => import('./editar/editar.module').then( m => m.EditarPageModule)
-  },
-  {
-    path: 'novo',
-    loadChildren: () => import('./novo/novo.module').then( m => m.NovoPageModule)
-  }
 
+  {
+    path: '',
+    children: [
+      {
+        path: ':tarefaId',
+        loadChildren: () => import('./editar/editar.module').then(m => m.EditarPageModule)
+      },
+      {
+        path: 'novo',
+        loadChildren: () => import('./novo/novo.module').then(m => m.NovoPageModule)
+      }
+    ]
+  },
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
-export class HomePageRoutingModule {}
+export class HomePageRoutingModule { }
