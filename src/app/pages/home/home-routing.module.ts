@@ -12,15 +12,11 @@ const routes: Routes = [
     path: '',
     children: [
       {
-        path: ':tarefaId',
+        path: 'editar/:tarefaId',
         loadChildren: () => import('./editar/editar.module').then(m => m.EditarPageModule)
       },
-      {
-        path: 'novo',
-        loadChildren: () => import('./novo/novo.module').then(m => m.NovoPageModule)
-      }
     ]
-  },
+  }
 ];
 
 @NgModule({

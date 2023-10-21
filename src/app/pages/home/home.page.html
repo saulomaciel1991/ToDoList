@@ -8,8 +8,10 @@
     <ion-toggle [enableOnOffLabels]="true" [checked]="marcacaoSimples" (ionChange)="alternaMarcacao()">Marcação
       Simples</ion-toggle>
 
-      <ion-button size="small" fill="clear" class="ion-margin-vertical" color="warning" (click)="concluirTodas()">Concluir Todas</ion-button>
-      <ion-button size="small" fill="clear" class="ion-margin-vertical" color="danger" (click)="excluirTarefasFeitas()">Limpar Concluídas</ion-button>
+    <ion-button size="small" fill="clear" class="ion-margin-vertical" color="warning" (click)="concluirTodas()">Concluir
+      Todas</ion-button>
+    <ion-button size="small" fill="clear" class="ion-margin-vertical" color="danger"
+      (click)="excluirTarefasFeitas()">Limpar Concluídas</ion-button>
   </ion-content>
 </ion-menu>
 
@@ -110,7 +112,13 @@
         </ion-col>
       </ion-row>
     </ion-grid>
+  
 
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab-button routerLink='/novo'>
+      <ion-icon name="add"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
   </ion-content>
 
   <ion-footer>
