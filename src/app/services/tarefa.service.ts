@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import * as uuid from 'uuid';
 
 @Injectable({
   providedIn: 'root',
@@ -13,17 +14,12 @@ export class TarefaService {
     let value = localStorage.getItem(this.key);
 
     if (value == null || value == undefined) {
-      tarefa.id = this.tarefaCollection.length + 1;
+      tarefa.id = uuid.v4()
       this.tarefaCollection.push(tarefa);
       localStorage.setItem(this.key, JSON.stringify(this.tarefaCollection));
     } else {
       let collection: any[] = JSON.parse(value);
-      let pos = collection.length - 1;
-      if (pos == -1) {
-        tarefa.id = 1;
-      } else {
-        tarefa.id = collection[pos].id + 1;
-      }
+      tarefa.id = uuid.v4()
       collection.push(tarefa);
       localStorage.setItem(this.key, JSON.stringify(collection));
     }
