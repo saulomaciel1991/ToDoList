@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import * as uuid from 'uuid';
+import { Tarefa } from './tarefa.model';
 
 @Injectable({
   providedIn: 'root',
@@ -129,7 +130,11 @@ export class TarefaService {
     if (tarefas != null){
       return {
         ...tarefas.find(tarefa => {
-          return tarefa.id == tarefaId
+          if(tarefa.id == tarefaId){
+            return tarefa as Tarefa
+          }else{
+            return []
+          }
         })
       }
     }
