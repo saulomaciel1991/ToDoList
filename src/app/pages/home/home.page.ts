@@ -191,10 +191,11 @@ export class HomePage implements OnInit {
             },
           },
           {
-            text: 'Detalhes',
-            icon: 'information',
+            text: 'Editar',
+            icon: 'pencil',
             handler: () => {
-              this.router.navigate(['/home/'+tarefa.id])
+              // this.router.navigate(['/home/'+tarefa.id])
+              this.router.navigate(['/','home','editar', tarefa.id])
             },
           }
         ],

@@ -5,8 +5,8 @@
     </ion-toolbar>
   </ion-header>
   <ion-content class="ion-padding">
-    <ion-toggle [enableOnOffLabels]="true" [checked]="marcacaoSimples" (ionChange)="alternaMarcacao()">Marcação
-      Simples</ion-toggle>
+    <!-- <ion-toggle [enableOnOffLabels]="true" [checked]="marcacaoSimples" (ionChange)="alternaMarcacao()">Marcação
+      Simples</ion-toggle> -->
 
     <ion-button size="small" fill="clear" class="ion-margin-vertical" color="warning" (click)="concluirTodas()">Concluir
       Todas</ion-button>
@@ -29,30 +29,6 @@
 
   <ion-content [fullscreen]="true" mode="ios">
     <ion-grid>
-      <!-- <ion-row>
-        <ion-col size-md="6" offset-md="3">
-          <ion-card>
-            <ion-card-header>
-              <ion-card-title class="ion-text-center">Nova Tarefa</ion-card-title>
-            </ion-card-header>
-            <ion-card-content class="ion-text-center">
-              <ion-item class="ion-margin-vertical">
-                <ion-label aria-labelledby="input-tarefa" position="floating">Descrição da Tarefa</ion-label>
-                <ion-input aria-label="Descrição da Tarefa" type="text" id="input-tarefa"></ion-input>
-              </ion-item>
-              <div class="ion-text-right">
-                <ion-button color="danger" (click)="limpar()">
-                  <ion-icon name="trash" slot="start"></ion-icon>
-                  Limpar</ion-button>
-                <ion-button (click)="add()">
-                  <ion-icon name="add-circle" slot="start"></ion-icon>
-                  Salvar Tarefa</ion-button>
-              </div>
-            </ion-card-content>
-          </ion-card>
-        </ion-col>
-      </ion-row> -->
-
       <ion-row>
         <ion-col size-md="6" offset-md="3">
           <ion-list class="animate__animated animate__lightSpeedInLeft ion-margin-horizontal">
@@ -101,14 +77,13 @@
                 </ion-item-options>
               </ng-template>
             </ion-item-sliding>
-
-            <ion-button class="ion-margin-vertical" color="warning" expand="block" *ngIf="ocultaConcluidos == false"
+          </ion-list>
+          <ion-button class="ion-margin-vertical" color="warning" expand="block" *ngIf="ocultaConcluidos == false"
               (click)="alternaFeitos()">Esconder
               Concluídas</ion-button>
             <ion-button class="ion-margin-vertical" color="success" expand="block" *ngIf="ocultaConcluidos == true"
               (click)="alternaFeitos()">Reexibir
               Concluídas</ion-button>
-          </ion-list>
         </ion-col>
       </ion-row>
     </ion-grid>
@@ -124,7 +99,7 @@
   <ion-footer>
     <ion-toolbar color="primary">
       <ion-title class="animate__animated animate__lightSpeedInRight ion-text-center">
-        <h3>V1.2.1</h3>
+        <h3>V1.2.6</h3>
       </ion-title>
     </ion-toolbar>
   </ion-footer>

@@ -20,8 +20,18 @@ export class TarefaService {
       localStorage.setItem(this.key, JSON.stringify(this.tarefaCollection));
     } else {
       let collection: any[] = JSON.parse(value);
-      tarefa.id = uuid.v4()
-      collection.push(tarefa);
+      
+      if (tarefa.id == undefined || tarefa.id == null){
+        tarefa.id = uuid.v4()
+        collection.push(tarefa);
+      } else {
+        collection.find( el =>{
+          if (el.id == tarefa.id){
+            el.tarefa = tarefa.tarefa
+          }
+        })
+      }
+      
       localStorage.setItem(this.key, JSON.stringify(collection));
     }
 
