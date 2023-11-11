@@ -13,6 +13,9 @@ export class TarefaService {
   salvar(tarefa: Tarefa, callback: any) {
     tarefa.feito = false;
     let value = localStorage.getItem(this.key);
+    if (tarefa.categoria == ''){
+      tarefa.categoria = 'Diversos'
+    }
 
     if (value == null || value == undefined) {
       tarefa.id = uuid.v4()

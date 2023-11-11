@@ -5,7 +5,7 @@ export class Tarefa {
     categoria: string
 
     constructor(){
-        this.categoria = 'Diversos'
+        this.categoria = ''
         this.feito = false
         this.tarefa = ''
         this.id = ''
