@@ -177,10 +177,10 @@ export class HomePage implements OnInit {
       });
     } else {
       let ac: ActionSheetOptions = {
-        header: 'Mudar Status para?',
+        header: 'Opções?',
         buttons: [
           {
-            text: tarefa.feito ? 'Pendente' : 'Concluido',
+            text: tarefa.feito ? 'Marcar Como Pendente' : 'Marcar Como Concluido',
             icon: tarefa.feito ? 'information-circle' : 'checkmark-circle',
             handler: () => {
               tarefa.feito = !tarefa.feito;
@@ -194,8 +194,17 @@ export class HomePage implements OnInit {
             text: 'Editar',
             icon: 'pencil',
             handler: () => {
-              // this.router.navigate(['/home/'+tarefa.id])
               this.router.navigate(['/','home','editar', tarefa.id])
+            },
+          },
+          {
+            text: 'Excluir',
+            icon: 'trash',
+            role: 'delete',
+            handler: () => {
+              this.tarefaService.excluir(tarefa, ()=>{
+                this.listarTarefas()
+              })
             },
           }
         ],
