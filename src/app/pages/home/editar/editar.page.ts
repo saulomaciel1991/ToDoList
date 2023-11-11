@@ -10,7 +10,7 @@ import { TarefaService } from 'src/app/services/tarefa.service';
   styleUrls: ['./editar.page.scss'],
 })
 export class EditarPage implements OnInit {
-
+  categorias : string [] = []
   tarefaCarregada! : Tarefa
   constructor(private tarefaService : TarefaService, private navCrtl : NavController, private activateRoute : ActivatedRoute) { }
 
@@ -23,6 +23,9 @@ export class EditarPage implements OnInit {
       let paramId : any = paramMap.get('tarefaId')
       this.tarefaCarregada = this.tarefaService.getbyId(paramId)
     })
+
+    this.categorias = ['Diversos', 'Compras', 'Filmes', 'Feira', 'Farmacia']
+    this.categorias.sort()
   }
 
   salvar(){

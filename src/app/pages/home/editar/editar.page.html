@@ -11,9 +11,11 @@
   <ion-card>
     <ion-card-content>
       <ion-item>
-        <ion-input type="text" [(ngModel)]="tarefaCarregada.categoria" label="Categoria" labelPlacement="floating"
-          placeholder="Informe a categoria"></ion-input>
+        <ion-select [(ngModel)]="tarefaCarregada.categoria" label="Categoria" placeholder="Categoria">
+          <ion-select-option *ngFor="let categoria of categorias" [value]="categoria">{{categoria}}</ion-select-option>
+        </ion-select>
       </ion-item>
+
       <ion-item>
         <ion-input type="text" [(ngModel)]="tarefaCarregada.tarefa" label="Descrição" labelPlacement="floating"
           placeholder="Descreva a tarefa"></ion-input>

@@ -10,9 +10,12 @@ import { TarefaService } from 'src/app/services/tarefa.service';
 })
 export class NovoPage implements OnInit {
   tarefa : Tarefa = new Tarefa()
+  categorias : string [] = []
   constructor( private tarefaService: TarefaService, private navCrtl : NavController) { }
 
   ngOnInit() {
+    this.categorias = ['Diversos', 'Compras', 'Filmes', 'Feira', 'Farmacia']
+    this.categorias.sort()
   }
 
   salvar(){
