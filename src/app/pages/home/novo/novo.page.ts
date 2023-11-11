@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { NavController } from '@ionic/angular';
+import { Categoria } from 'src/app/services/categoria.model';
 import { Tarefa } from 'src/app/services/tarefa.model';
 import { TarefaService } from 'src/app/services/tarefa.service';
 
@@ -9,13 +10,12 @@ import { TarefaService } from 'src/app/services/tarefa.service';
   styleUrls: ['./novo.page.scss'],
 })
 export class NovoPage implements OnInit {
+  categorias : string[] = new Categoria().categorias
   tarefa : Tarefa = new Tarefa()
-  categorias : string [] = []
   constructor( private tarefaService: TarefaService, private navCrtl : NavController) { }
 
   ngOnInit() {
-    this.categorias = ['Diversos', 'Compras', 'Filmes', 'Feira', 'Farmacia']
-    this.categorias.sort()
+    
   }
 
   salvar(){

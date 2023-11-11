@@ -202,6 +202,7 @@ export class HomePage implements OnInit {
     this.tarefaService.excluirConcluidos(() => {
       this.listarTarefas();
     })
+    location.reload()
   }
 
   concluirTodas() {
