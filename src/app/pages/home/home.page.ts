@@ -40,12 +40,13 @@ export class HomePage implements OnInit {
   }
 
   ngOnInit() {
-    this.ocultaConcluidos = this.tarefaService.getConfig('ocultaConcluidos');
-    this.marcacaoSimples = this.tarefaService.getConfig('marcacaoSimples');
-    this.categorias = this.tarefaService.getCategorias()
+   
   }
 
   ionViewDidEnter() {
+    this.ocultaConcluidos = this.tarefaService.getConfig('ocultaConcluidos');
+    this.marcacaoSimples = this.tarefaService.getConfig('marcacaoSimples');
+    this.categorias = this.tarefaService.getCategorias()
     this.listarTarefas();
   }
 
