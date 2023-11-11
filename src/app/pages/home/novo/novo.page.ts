@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { NavController } from '@ionic/angular';
+import { Tarefa } from 'src/app/services/tarefa.model';
 import { TarefaService } from 'src/app/services/tarefa.service';
 
 @Component({
@@ -8,15 +9,14 @@ import { TarefaService } from 'src/app/services/tarefa.service';
   styleUrls: ['./novo.page.scss'],
 })
 export class NovoPage implements OnInit {
-  tarefa! : string 
+  tarefa : Tarefa = new Tarefa()
   constructor( private tarefaService: TarefaService, private navCrtl : NavController) { }
 
   ngOnInit() {
   }
 
   salvar(){
-    let tarefa : any  = {tarefa : this.tarefa}
-    this.tarefaService.salvar(tarefa, this.voltar())
+    this.tarefaService.salvar(this.tarefa, this.voltar())
   }
 
   voltar(){

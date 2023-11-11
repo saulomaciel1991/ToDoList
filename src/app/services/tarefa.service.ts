@@ -6,11 +6,11 @@ import { Tarefa } from './tarefa.model';
   providedIn: 'root',
 })
 export class TarefaService {
-  tarefaCollection: any[] = [];
+  tarefaCollection: Tarefa[] = [];
   key: string = 'tarefaCollection';
   constructor() { }
 
-  salvar(tarefa: any, callback: any) {
+  salvar(tarefa: Tarefa, callback: any) {
     tarefa.feito = false;
     let value = localStorage.getItem(this.key);
 
@@ -20,18 +20,19 @@ export class TarefaService {
       localStorage.setItem(this.key, JSON.stringify(this.tarefaCollection));
     } else {
       let collection: any[] = JSON.parse(value);
-      
-      if (tarefa.id == undefined || tarefa.id == null){
+
+      if (tarefa.id == undefined || tarefa.id == null || tarefa.id.length == 0) {
         tarefa.id = uuid.v4()
         collection.push(tarefa);
       } else {
-        collection.find( el =>{
-          if (el.id == tarefa.id){
+        collection.find(el => {
+          if (el.id == tarefa.id) {
             el.tarefa = tarefa.tarefa
+            el.categoria = tarefa.categoria
           }
         })
       }
-      
+
       localStorage.setItem(this.key, JSON.stringify(collection));
     }
 
@@ -50,7 +51,25 @@ export class TarefaService {
       collection.sort(
         (a, b) => a.feito - b.feito || a.tarefa.localeCompare(b.tarefa)
       );
+      collection.forEach(el => {
+        if (el.categoria == null || el.categoria == undefined) {
+          el.categoria = 'Diversos'
+        }
+      })
       return collection;
+    }
+  }
+
+  listarPorCategoria(categoria: string) {
+    let value = localStorage.getItem(this.key);
+    if (value == null || value == undefined) {
+      return [];
+    } else {
+      let collection: Tarefa[] = JSON.parse(value);
+      const result = collection.filter(el => {
+        return el.categoria == categoria
+      })
+      return result;
     }
   }
 
@@ -134,22 +153,32 @@ export class TarefaService {
     }
   }
 
-  getbyId(tarefaId: string) {
-    let tarefas = this.listar()
-
-    if (tarefas != null){
-      return {
-        ...tarefas.find(tarefa => {
-          if(tarefa.id == tarefaId){
-            return tarefa as Tarefa
-          }else{
-            return []
-          }
-        })
-      }
+  getbyId(tarefaId: string): any {
+    let tarefas = this.listar() as Tarefa[]
+    const result = tarefas.filter(el => {
+      return el.id == tarefaId
+    })
+    if (result.length > 0) {
+      return { ...result[0] }
+    } else {
+      return []
     }
+  }
 
-    
+  getCategorias(): string[] {
+    let lista: Tarefa[] = this.listar()
+    let categorias: string[] = []
+
+    lista.forEach(el => {
+      let encontrou = categorias.find(cat => {
+        return el.categoria == cat
+      })
+
+      if (encontrou == undefined) {
+        categorias.push(el.categoria)
+      }
+    })
+    return categorias
   }
 
   setConfig(key: string, value: any) {

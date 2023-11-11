@@ -15,19 +15,13 @@ export class EditarPage implements OnInit {
   constructor(private tarefaService : TarefaService, private navCrtl : NavController, private activateRoute : ActivatedRoute) { }
 
   ngOnInit() {
-    this.tarefaCarregada = {
-      tarefa : 'Teste',
-      id : '10',
-      feito : false
-    }
-
     this.activateRoute.paramMap.subscribe( paramMap =>{
       if(!paramMap.has('tarefaId')){
         this.navCrtl.navigateBack('/home')
         return
       }
       let paramId : any = paramMap.get('tarefaId')
-      this.tarefaCarregada = this.tarefaService.getbyId(paramId) as Tarefa
+      this.tarefaCarregada = this.tarefaService.getbyId(paramId)
     })
   }
 

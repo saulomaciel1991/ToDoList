@@ -10,6 +10,7 @@ import { Optional } from '@angular/core';
 import { IonRouterOutlet, Platform } from '@ionic/angular';
 import { App } from '@capacitor/app';
 import { Router } from '@angular/router';
+import { Tarefa } from 'src/app/services/tarefa.model';
 
 @Component({
   selector: 'app-home',
@@ -17,10 +18,11 @@ import { Router } from '@angular/router';
   styleUrls: ['home.page.scss'],
 })
 export class HomePage implements OnInit {
-  tarefaCollection: any[] = [];
+  tarefaCollection: Tarefa[] = [];
   ocultaConcluidos: boolean = false;
   tarefaAtual: any = { id: '', tarefa: '', status: '' }
   marcacaoSimples: boolean = false
+  categorias: string[] = []
 
   constructor(
     private alertCtrl: AlertController,
@@ -40,6 +42,7 @@ export class HomePage implements OnInit {
   ngOnInit() {
     this.ocultaConcluidos = this.tarefaService.getConfig('ocultaConcluidos');
     this.marcacaoSimples = this.tarefaService.getConfig('marcacaoSimples');
+    this.categorias = this.tarefaService.getCategorias()
   }
 
   ionViewDidEnter() {
@@ -62,40 +65,13 @@ export class HomePage implements OnInit {
   }
 
   atualizar(item: any) {
-    // this.tarefaService.excluir(item, () => {
-    //   this.listarTarefas();
-    // });
     this.tarefaAtual = item
     this.edit()
-    // this.showEdit(item)
   }
 
   async edit() {
     const inputTarefa: any = document.querySelector("#input-tarefa")
     inputTarefa.value = this.tarefaAtual.tarefa
-  }
-
-  async add() {
-    const inputTarefa: any = document.querySelector("#input-tarefa")
-    const tarefa = { tarefa: inputTarefa.value }
-    if (inputTarefa.value.trim() <= 0) {
-      return
-    }
-
-    if (this.tarefaAtual.id != '') {
-      this.tarefaAtual.tarefa = inputTarefa.value
-      this.tarefaService.atualizar(this.tarefaAtual, () => {
-        this.limpar()
-        this.listarTarefas();
-        this.tarefaAtual.id = ''
-      });
-    } else {
-      this.tarefaService.salvar(tarefa, () => {
-        this.limpar()
-        this.listarTarefas();
-        this.tarefaAtual.id = ''
-      });
-    }
   }
 
   limpar() {
@@ -194,7 +170,7 @@ export class HomePage implements OnInit {
             text: 'Editar',
             icon: 'pencil',
             handler: () => {
-              this.router.navigate(['/','home','editar', tarefa.id])
+              this.router.navigate(['/', 'home', 'editar', tarefa.id])
             },
           },
           {
@@ -202,7 +178,7 @@ export class HomePage implements OnInit {
             icon: 'trash',
             role: 'delete',
             handler: () => {
-              this.tarefaService.excluir(tarefa, ()=>{
+              this.tarefaService.excluir(tarefa, () => {
                 this.listarTarefas()
               })
             },
@@ -231,5 +207,13 @@ export class HomePage implements OnInit {
     this.tarefaService.concluirTodas(() => {
       this.listarTarefas();
     })
+  }
+
+  listarPorCategoria(categoria: string): Tarefa[] {
+    let lista: Tarefa[]
+
+    lista = this.tarefaService.listarPorCategoria(categoria)
+
+    return lista
   }
 }
