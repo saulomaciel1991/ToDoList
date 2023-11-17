@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import * as uuid from 'uuid';
 import { Tarefa } from './tarefa.model';
+import { Categoria } from './categoria.model';
 
 @Injectable({
   providedIn: 'root',
@@ -13,7 +14,7 @@ export class TarefaService {
   salvar(tarefa: Tarefa, callback: any) {
     tarefa.feito = false;
     let value = localStorage.getItem(this.key);
-    if (tarefa.categoria == ''){
+    if (tarefa.categoria == '') {
       tarefa.categoria = 'Diversos'
     }
 
@@ -169,10 +170,10 @@ export class TarefaService {
   }
 
   getCategorias(): string[] {
-    let lista: Tarefa[] = this.listar()
+    let lista: any = localStorage.getItem('categorias');
     let categorias: string[] = []
 
-    lista.forEach(el => {
+    lista.forEach((el: any) => {
       let encontrou = categorias.find(cat => {
         return el.categoria == cat
       })
@@ -182,6 +183,14 @@ export class TarefaService {
       }
     })
     return categorias
+  }
+
+  setCategorias(categoria: any) {
+    let cat = new Categoria()
+    cat.categorias.push(categoria.categoria)
+
+    localStorage.setItem('categorias', JSON.stringify(cat.categorias));
+    debugger
   }
 
   setConfig(key: string, value: any) {
@@ -202,4 +211,6 @@ export class TarefaService {
 
     return ret
   }
+
+
 }
