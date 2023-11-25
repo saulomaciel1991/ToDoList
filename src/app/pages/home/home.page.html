@@ -34,7 +34,7 @@
           <ion-item *ngIf="tarefaCollection.length < 1">
             <ion-label>Não há Tarefas</ion-label>
           </ion-item>
-          <ion-accordion-group>
+          <ion-accordion-group *ngIf="tarefaCollection.length > 0">
             <ion-accordion [value]="categoria" *ngFor="let categoria of categorias; let i = index">
               <ion-item slot="header">
                 <ion-label>{{categoria}}</ion-label>

@@ -4,6 +4,12 @@
     <ion-buttons slot="start">
       <ion-back-button defaultHref="/home"></ion-back-button>
     </ion-buttons>
+    <ion-buttons slot="primary">
+      <ion-button (click)="showAdd()">
+        <ion-label>Nova Categoria</ion-label>
+        <ion-icon slot="start" name="add"></ion-icon>
+      </ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 

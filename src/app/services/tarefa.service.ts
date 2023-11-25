@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import * as uuid from 'uuid';
+import { Categoria } from './categoria.model';
 import { Tarefa } from './tarefa.model';
 
 @Injectable({
@@ -13,7 +14,7 @@ export class TarefaService {
   salvar(tarefa: Tarefa, callback: any) {
     tarefa.feito = false;
     let value = localStorage.getItem(this.key);
-    if (tarefa.categoria == ''){
+    if (tarefa.categoria == '') {
       tarefa.categoria = 'Diversos'
     }
 
@@ -169,19 +170,33 @@ export class TarefaService {
   }
 
   getCategorias(): string[] {
-    let lista: Tarefa[] = this.listar()
+    let lista: any = localStorage.getItem('categorias');
     let categorias: string[] = []
+    
+    if (lista != null && lista != undefined){ 
+      categorias = JSON.parse(lista);
+      return categorias
+    }else{
+      categorias.push('Diversos')
+      return categorias
+    }
+    
+  }
 
-    lista.forEach(el => {
-      let encontrou = categorias.find(cat => {
-        return el.categoria == cat
-      })
-
-      if (encontrou == undefined) {
-        categorias.push(el.categoria)
-      }
-    })
-    return categorias
+  setCategorias(categoria: any) {
+    let cat = new Categoria()
+    let lista: any = localStorage.getItem('categorias');
+    
+    if (lista != null && lista != undefined){ 
+      cat.categorias = JSON.parse(lista);
+      cat.categorias.push(categoria.categoria)
+      debugger
+      localStorage.setItem('categorias', JSON.stringify(cat.categorias));
+      return cat.categorias
+    }else{
+      cat.categorias.push('Diversos')
+      return cat.categorias
+    }
   }
 
   setConfig(key: string, value: any) {
@@ -202,4 +217,6 @@ export class TarefaService {
 
     return ret
   }
+
+
 }

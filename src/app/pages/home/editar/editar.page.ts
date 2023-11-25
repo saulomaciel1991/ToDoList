@@ -23,6 +23,7 @@ export class EditarPage implements OnInit {
       }
       let paramId : any = paramMap.get('tarefaId')
       this.tarefaCarregada = this.tarefaService.getbyId(paramId)
+      this.categorias = this.tarefaService.getCategorias()
     })
   }
 
