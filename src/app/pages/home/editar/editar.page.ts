@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { NavController } from '@ionic/angular';
+import { Categoria } from 'src/app/services/categoria.model';
 import { Tarefa } from 'src/app/services/tarefa.model';
 import { TarefaService } from 'src/app/services/tarefa.service';
 
@@ -10,7 +11,7 @@ import { TarefaService } from 'src/app/services/tarefa.service';
   styleUrls: ['./editar.page.scss'],
 })
 export class EditarPage implements OnInit {
-  categorias : string [] = []
+  categorias : string[] = new Categoria().categorias
   tarefaCarregada! : Tarefa
   constructor(private tarefaService : TarefaService, private navCrtl : NavController, private activateRoute : ActivatedRoute) { }
 
@@ -22,10 +23,8 @@ export class EditarPage implements OnInit {
       }
       let paramId : any = paramMap.get('tarefaId')
       this.tarefaCarregada = this.tarefaService.getbyId(paramId)
+      this.categorias = this.tarefaService.getCategorias()
     })
-
-    this.categorias = ['Diversos', 'Compras', 'Filmes', 'Feira', 'Farmacia']
-    this.categorias.sort()
   }
 
   salvar(){

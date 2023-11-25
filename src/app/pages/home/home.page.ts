@@ -11,6 +11,7 @@ import { IonRouterOutlet, Platform } from '@ionic/angular';
 import { App } from '@capacitor/app';
 import { Router } from '@angular/router';
 import { Tarefa } from 'src/app/services/tarefa.model';
+import { Categoria } from 'src/app/services/categoria.model';
 
 @Component({
   selector: 'app-home',
@@ -82,12 +83,12 @@ export class HomePage implements OnInit {
 
   async showAdd() {
     const alert = await this.alertCtrl.create({
-      header: 'Informe a Tarefa',
+      header: 'Informe a categoria',
       inputs: [
         {
-          name: 'tarefa',
+          name: 'categoria',
           type: 'text',
-          placeholder: 'Descreva sua tarefa',
+          placeholder: 'Descreva sua categoria',
         },
       ],
 
@@ -100,10 +101,8 @@ export class HomePage implements OnInit {
         },
         {
           text: 'Salvar',
-          handler: (tarefa) => {
-            this.tarefaService.salvar(tarefa, () => {
-              this.listarTarefas();
-            });
+          handler: (categoria : Categoria) => {
+            this.tarefaService.setCategorias(categoria)
           },
         },
       ],
@@ -183,6 +182,13 @@ export class HomePage implements OnInit {
                 this.listarTarefas()
               })
             },
+          },
+          {
+            text: 'Nova Categoria',
+            icon: 'add',
+            handler: () => {
+              this.showAdd()
+            },
           }
         ],
       };
@@ -202,6 +208,7 @@ export class HomePage implements OnInit {
     this.tarefaService.excluirConcluidos(() => {
       this.listarTarefas();
     })
+    location.reload()
   }
 
   concluirTodas() {
