@@ -47,7 +47,10 @@ export class NovoPage implements OnInit {
         {
           text: 'Salvar',
           handler: (categoria : Categoria) => {
-            this.tarefaService.setCategorias(categoria)
+            this.tarefaService.setCategorias(categoria, ()=>{
+              this.tarefaService.getCategorias()
+              location.reload()
+            })
           },
         },
       ],

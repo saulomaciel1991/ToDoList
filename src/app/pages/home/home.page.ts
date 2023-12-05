@@ -7,11 +7,11 @@ import {
 import { TarefaService } from 'src/app/services/tarefa.service';
 
 import { Optional } from '@angular/core';
-import { IonRouterOutlet, Platform } from '@ionic/angular';
-import { App } from '@capacitor/app';
 import { Router } from '@angular/router';
-import { Tarefa } from 'src/app/services/tarefa.model';
+import { App } from '@capacitor/app';
+import { IonRouterOutlet, Platform } from '@ionic/angular';
 import { Categoria } from 'src/app/services/categoria.model';
+import { Tarefa } from 'src/app/services/tarefa.model';
 
 @Component({
   selector: 'app-home',
@@ -102,7 +102,10 @@ export class HomePage implements OnInit {
         {
           text: 'Salvar',
           handler: (categoria : Categoria) => {
-            this.tarefaService.setCategorias(categoria)
+            this.tarefaService.setCategorias(categoria, ()=>{
+              this.categorias = this.tarefaService.getCategorias()
+              location.reload()
+            })
           },
         },
       ],

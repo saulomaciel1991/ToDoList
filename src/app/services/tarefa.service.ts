@@ -183,19 +183,21 @@ export class TarefaService {
     
   }
 
-  setCategorias(categoria: any) {
+  setCategorias(categoria: any, callback: any) {
     let cat = new Categoria()
     let lista: any = localStorage.getItem('categorias');
     
     if (lista != null && lista != undefined){ 
       cat.categorias = JSON.parse(lista);
       cat.categorias.push(categoria.categoria)
-      debugger
       localStorage.setItem('categorias', JSON.stringify(cat.categorias));
-      return cat.categorias
     }else{
-      cat.categorias.push('Diversos')
-      return cat.categorias
+      cat.categorias.push(categoria.categoria)
+      localStorage.setItem('categorias', JSON.stringify(cat.categorias))
+    }
+
+    if (callback != undefined) {
+      callback();
     }
   }
 
